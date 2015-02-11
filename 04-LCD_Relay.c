@@ -1,4 +1,4 @@
-#define RELAY2 7
+#define RELAY1 7
 
 #define RELAY2 6
 
@@ -25,12 +25,18 @@ void toggle_relay(int relay_number)
         Serial.println(relay_number);
 
         if (relay_state[relay_number] == LOW) {
-                lcd.setCursor(0,2);
-                lcd.print("on");
+                if (relay_number == 1)
+                    lcd.setCursor(15,0);
+                if (relay_number == 2)
+                    lcd.setCursor(15,1);
+                lcd.print(" on ");
                 turn_relay(relay_number, HIGH);
         } else {
-                lcd.setCursor(0,2);
-                lcd.print("off");
+                if (relay_number == 1)
+                    lcd.setCursor(15,0);
+                if (relay_number == 2)
+                    lcd.setCursor(15,1);
+                lcd.print(" off");
                 turn_relay(relay_number, LOW);
         }
 }
@@ -40,7 +46,7 @@ void setup() {
     for (int relay_number = 6; relay_number <= 8; relay_number++){
     pinMode(relay_number, OUTPUT);
   }
-lcd.begin(16,2);
+lcd.begin(20,4);
 
   for(int i = 0; i< 2; i++)
   {
@@ -59,7 +65,13 @@ lcd.begin(16,2);
   delay(1000);
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("Relay number?       (1 or 2)");
+  lcd.print("Relay number?");
+  lcd.setCursor(0,1); 
+  lcd.print("1 or 2");
+  delay(3000);
+  lcd.clear();
+  lcd.setCursor(0,3);
+  lcd.print("Your advertising");
 
 }
 
@@ -69,11 +81,14 @@ void loop()
     if (Serial.available() > 0) {
          relay_number = Serial.read() - 48;
         if (relay_number == 1 || relay_number == 2) {
-                lcd.clear();
-                lcd.print("Relay number: ");       
+                lcd.setCursor(0,0);
+                if (relay_number == 2)
+                    lcd.setCursor(0,1);
+                lcd.print("Relay number: ");
                 lcd.print(relay_number);
                 
               toggle_relay(relay_number);
         }
   }
 }
+
