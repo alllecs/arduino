@@ -9,15 +9,36 @@
 char array1[] = { 
   0x00, 0x00, 0x81, 0x42, 0x24, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00 }; 
 
+static char *blarg_xpm[] = {
+"**..*...",
+"*.*.*...",
+"**..*..*",
+"*.*.*.*.",
+"**..*..*",
+"........",
+"........",
+"........"
+}
+
+void render(char *pic)
+{
+
+      writeMAX7219( ?? , ???);
+
+}
+
 void setup()   {
 
   pinMode(Rb5, OUTPUT);
   pinMode(Rb6, OUTPUT);
   pinMode(Rb7, OUTPUT);
   digitalWrite(Rb5, LOW);
+
+render(blarg_xpm);
 }
 
 void loop()   {
+#if 0
   delay(1000);
 
   init_MAX7219();
@@ -31,6 +52,7 @@ void loop()   {
     k++;
     if (k > 8) k = 0;
   }
+#endif
 }
 
 // shift data to MAX7219
